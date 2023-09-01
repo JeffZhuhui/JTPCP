@@ -46,6 +46,7 @@ public:
 
 
 class PlayControlAct {
+public:
     static PCPackage Unmarshal(const PCMsg& msg, Execption & exc);
     static PCMsg Marshal(const PCPackage & pkg, Execption & exc);
 };
