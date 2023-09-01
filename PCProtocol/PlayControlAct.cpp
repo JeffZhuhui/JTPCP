@@ -80,3 +80,56 @@ PCMsg PlayControlAct::Marshal(const PCPackage & pkg, Execption & exc){
     }
     return msg;
 }
+
+
+bool unmarshal(const std::vector<unsigned char >& src, unsigned int &pos, unsigned int & dest){
+    if(src.size() < pos + 4){
+        return false;
+    }
+    unsigned char v1 = src[pos++];
+    unsigned char v2 = src[pos++];
+    unsigned char v3 = src[pos++];
+    unsigned char v4 = src[pos++];
+    dest = v1 << 24 | v2 << 16 | v3 << 8 | v4;
+
+    return true;
+}
+bool marshal(std::vector<unsigned char >& dest, unsigned int &pos, const unsigned int & src){
+    if(dest.size() < pos + 4){
+        return false;
+    }
+    dest[pos++] = src >> 24;
+    dest[pos++] = src >> 16;
+    dest[pos++] = src >> 8;
+    dest[pos++] = src ;
+
+    return true;
+}
+
+bool unmarshal(const std::vector<unsigned char >& src, unsigned int &pos, std::string & dest){
+    unsigned int len = 0;
+    bool bret = unmarshal(  src,  pos, len);
+    if(!bret){
+        return false;
+    }
+    if(src.size() < pos + len){
+        return false;
+    }
+    dest = std::string ((char*)(&src[pos]), len);
+    pos += len;
+    return true;
+}
+bool marshal(std::vector<unsigned char >& dest, unsigned int &pos, const std::string & src){
+    unsigned int len = src.length();
+    bool bret = marshal(dest,pos,len);
+    if(!bret){
+        return false;
+    }
+    if(dest.size() < pos + len){
+        return false;
+    }
+    for(unsigned int i = 0; i < len; ++i){
+        dest[pos++] = src[i];
+    }
+    return true;
+}
