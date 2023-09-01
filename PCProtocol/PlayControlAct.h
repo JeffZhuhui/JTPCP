@@ -13,13 +13,13 @@ enum class PAction{
     EM_PAUSE,   //暂停
     EM_VOL_ADD, ////音量+
     EM_VOL_SUB,//音量-
-    EM_VOL_SET,//音量设置
+    EM_VOL_SET,//音量设置 + 0~100
     EM_REPLAY,//重播
     EM_STOP,//停止
-    EM_SELECT,//选择文件播放
-    EM_NOTIFY,//消息通知
-    EM_NOTIFY_PLAYED,//播放完通知
-    EM_ERROR//错误消息
+    EM_SELECT,//选择文件播放 + 文件名
+    EM_NOTIFY,//消息通知    服务器返回给客户端，表示命令已接收
+    EM_NOTIFY_PLAYED,//播放完通知 + 文件名
+    EM_ERROR//错误消息 + 错误描述
 };
 
 class PCPackage{
