@@ -8,18 +8,18 @@
 #include <vector>
 
 enum class PAction{
-    EM_UNKNOWN,
-    EM_PLAY = 1,
-    EM_PAUSE,
-    EM_VOL_ADD,
-    EM_VOL_SUB,
-    EM_VOL_SET,
-    EM_REPLAY,
-    EM_STOP,
-    EM_SELECT,
-    EM_NOTIFY,
-    EM_NOTIFY_PLAYED,
-    EM_ERROR
+    EM_UNKNOWN,  //
+    EM_PLAY = 1, //播放
+    EM_PAUSE,   //暂停
+    EM_VOL_ADD, ////音量+
+    EM_VOL_SUB,//音量-
+    EM_VOL_SET,//音量设置
+    EM_REPLAY,//重播
+    EM_STOP,//停止
+    EM_SELECT,//选择文件播放
+    EM_NOTIFY,//消息通知
+    EM_NOTIFY_PLAYED,//播放完通知
+    EM_ERROR//错误消息
 };
 
 class PCPackage{
