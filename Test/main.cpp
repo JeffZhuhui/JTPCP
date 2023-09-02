@@ -23,7 +23,38 @@ void TEST_LOG(){
     DAElog_warn("TEST LOG: %s", "123");
 }
 
+
+void TEST_tool(){
+    std::string src = "\\123.mp4\\234.mp4\\\\345.mp4";
+    std::vector<std::string> allfiles;
+    Comm::SplitFilename(allfiles,src);
+
+    std::string dest;
+    Comm::UniteFilename(allfiles,dest);
+    if(dest == "123.mp4\\234.mp4\\345.mp4"){
+        printf("succeed.\n");
+    } else {
+        printf(" TEST_tool failed.\n");
+    }
+}
+
+
+
 int main(int argc,char ** argv){
+
+
+    PCPackage pkg;
+    pkg._pact = PAction::EM_NOTIFY_PLAYED;
+    pkg._content = "meeting1.mp4";
+
+
+    Execption exc;
+    PCMsg  msg= PlayControlAct::Marshal(pkg,exc);
+
+    msg._data[3] = 12;
+    PCPackage pkg2 = PlayControlAct::Unmarshal(msg, exc);
+
+    TEST_tool();
 
     TEST_INIReader();
     TEST_LOG();

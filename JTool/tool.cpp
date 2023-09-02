@@ -7,6 +7,7 @@
 #include <map>
 #include <stdio.h>
 #include <stdarg.h>
+#include <algorithm>
 #include "log.h"
 
 
@@ -49,5 +50,34 @@ namespace Comm {
         }
         return nLog;
     }*/
+
+    bool SplitFilename(std::vector<std::string> & dest, const std::string & src){
+        auto first = std::cbegin(src);
+        std::string delims = "\\";
+        while (first != std::cend(src))
+        {
+            const auto second = std::find_first_of(first, std::cend(src),
+                                                   std::cbegin(delims), std::cend(delims));
+            if (first != second)
+                dest.emplace_back(first, second);
+            if (second == std::cend(src))
+                break;
+            first = std::next(second);
+        }
+        return true;
+    }
+    bool UniteFilename(const std::vector<std::string> & src, std::string & dest){
+        dest.clear();
+        for(auto& it: src){
+            if(!it.empty()){
+                if(!dest.empty()){
+                    dest += "\\";
+                }
+                dest += it;
+            }
+        }
+        return true;
+    }
+
 
 }

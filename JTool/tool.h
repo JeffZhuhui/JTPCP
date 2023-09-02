@@ -7,6 +7,7 @@
 
 #include <string>
 #include <map>
+#include <vector>
 
 
 
@@ -14,7 +15,8 @@ namespace Comm {
 
     bool LogSet(const char* filepath, int level, bool quiet );
 
-
+    bool SplitFilename(std::vector<std::string> & dest, const std::string & src);
+    bool UniteFilename(const std::vector<std::string> & src, std::string & dest);
 
 }
 

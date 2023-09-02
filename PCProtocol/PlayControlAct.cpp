@@ -19,7 +19,7 @@ PCPackage PlayControlAct::Unmarshal(const PCMsg& msg, Execption & exc){
         exc._error = "invalid tcp package length";
         return pkg;
     }
-    if(act > int(PAction::EM_ERROR)){
+    if(act > int(PAction::EM_NOTIFY_FILES)){
         exc._error = "invalid command";
         return pkg;
     }
@@ -36,8 +36,9 @@ PCPackage PlayControlAct::Unmarshal(const PCMsg& msg, Execption & exc){
         case PAction::EM_STOP:{}break;
         case PAction::EM_SELECT:{bparser = unmarshal(msg._data,pos,content);}break;
         case PAction::EM_NOTIFY:{}break;
-        case PAction::EM_NOTIFY_PLAYED:{bparser = unmarshal(msg._data,pos,content);}break;
-        case PAction::EM_ERROR:{bparser = unmarshal(msg._data,pos,content);}break;
+        case PAction::EM_NOTIFY_PLAYED:
+        case PAction::EM_ERROR:
+        case PAction::EM_NOTIFY_FILES:{bparser = unmarshal(msg._data,pos,content);}break;
         default:
             break;
     }
@@ -69,8 +70,9 @@ PCMsg PlayControlAct::Marshal(const PCPackage & pkg, Execption & exc){
         case PAction::EM_STOP:{}break;
         case PAction::EM_SELECT:{bmarshal = marshal(msg._data,pos,pkg._content);}break;
         case PAction::EM_NOTIFY:{}break;
-        case PAction::EM_NOTIFY_PLAYED:{bmarshal = marshal(msg._data,pos,pkg._content);}break;
-        case PAction::EM_ERROR:{bmarshal = marshal(msg._data,pos,pkg._content);}break;
+        case PAction::EM_NOTIFY_PLAYED:
+        case PAction::EM_ERROR:
+        case PAction::EM_NOTIFY_FILES:{bmarshal = marshal(msg._data,pos,pkg._content);}break;
         default:
             break;
     }
