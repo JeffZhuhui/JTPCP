@@ -79,5 +79,19 @@ namespace Comm {
         return true;
     }
 
+    bool SplitString(std::vector<std::string> & dest, const std::string & src, const std::string & delims){
+        auto first = std::cbegin(src);
+        while (first != std::cend(src))
+        {
+            const auto second = std::find_first_of(first, std::cend(src),
+                                                   std::cbegin(delims), std::cend(delims));
+            if (first != second)
+                dest.emplace_back(first, second);
+            if (second == std::cend(src))
+                break;
+            first = std::next(second);
+        }
+        return true;
+    }
 
 }

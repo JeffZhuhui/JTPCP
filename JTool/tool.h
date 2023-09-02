@@ -18,6 +18,8 @@ namespace Comm {
     bool SplitFilename(std::vector<std::string> & dest, const std::string & src);
     bool UniteFilename(const std::vector<std::string> & src, std::string & dest);
 
+    bool SplitString(std::vector<std::string> & dest, const std::string & src, const std::string & delims);
+
 }
 
 
