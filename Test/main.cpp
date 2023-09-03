@@ -42,6 +42,11 @@ void TEST_tool(){
 
 int main(int argc,char ** argv){
 
+    std::string a = "test.mp4";
+    for (int i = 0; i < a.length(); ++i) {
+        printf("%x\n",a[i]);
+    }
+
 
     PCPackage pkg;
     pkg._pact = PAction::EM_NOTIFY_PLAYED;

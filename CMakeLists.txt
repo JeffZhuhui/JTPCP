@@ -42,7 +42,7 @@ else()
 ENDIF()
 
 add_subdirectory(JClient)
-#add_subdirectory(JServer)
+add_subdirectory(JServer)
 #add_subdirectory(JWinServer)
 add_subdirectory(JTool)
 add_subdirectory(PCProtocol)
