@@ -19,16 +19,16 @@
 
 void Useage(){
     std::string  str= "---------command---------\n"
-                      "1 : 播放\n"
-                      "2 : 暂停\n"
-                      "3 : 音量+5\n"
-                      "4 : 音量-5\n"
-                      "5 : 音量设置 + 0~100\n"
-                      "6 : 重播\n"
-                      "7 : 停止\n"
-                      "8 : 选择文件播放 + 文件序号\n"
+                      "1 : Play\n"
+                      "2 : Pause\n"
+                      "3 : Volume up +5\n"
+                      "4 : Volume down -5\n"
+                      "5 : volume set + 0~100\n"
+                      "6 : Replay\n"
+                      "7 : Stop\n"
+                      "8 : Select file to play + file sort number\n"
                       "--------------------------\n"
-                      "示例> 8  test.mp4\n";
+                      "eg> 8  test.mp4\n";
     printf(str.c_str());
 }
 
@@ -36,25 +36,25 @@ void PrintPkg(PCPackage & pkg){
     std::string msg = "--------------------------------\n";
     switch (pkg._pact) {
         case PAction::EM_NOTIFY:{
-            msg += "服务器已接收\n";
+            msg += "The server has received\n";
         } break;
         case PAction::EM_NOTIFY_PLAYED:{
-            msg += "视频(" + pkg._content + ")播放完毕\n";
+            msg += "video(" + pkg._content + ")Finished playing\n";
         } break;
         case PAction::EM_ERROR:{
-            msg += "错误：\n";
+            msg += "error:\n";
             msg += pkg._content + "\n";
         } break;
         case PAction::EM_NOTIFY_FILES:{
-            msg += "服务端文件列表：\n";
+            msg += "Server video file list:\n";
             std::vector<std::string> vec;
             Comm::SplitFilename(vec,pkg._content);
             for (int i = 0; i < vec.size(); ++i) {
-                msg += std::to_string(i+1) + " : "+vec[i] + "\n";
+                msg += std::to_string(i) + " : "+vec[i] + "\n";
             }
         } break;
         default:{
-            msg += "无效的消息\n";
+            msg += "Invalid message\n";
         }
     }
     printf("%s\n",msg.c_str());
@@ -139,23 +139,39 @@ int main(int argc, char* argv[])
 
     std::string ip;
     int port;
-    {
+    while(1){
         printf("please input server ip:\n");
         fflush(stdout);
-        char buff[MAXLINE];
-        fgets(buff,MAXLINE,stdin);
+        char buff[MAXLINE]={0};
+        char * a = fgets(buff,MAXLINE,stdin);
+        if(buff[0]=='\n'){
+            continue;
+        }
         strtok(buff,"\n");
-        ip = buff;
+        if(buff[0]==0){
+            continue;
+        } else {
+            ip = buff;
+            break;
+        }
     }
 
-    {
+    while(1){
         printf("please input server port:\n");
         fflush(stdout);
         char buff[MAXLINE];
         fgets(buff,MAXLINE,stdin);
+        if(buff[0]=='\n'){
+            continue;
+        }
         strtok(buff,"\n");
         std::string sport = buff;
-        port = stoi(sport);
+        if(buff[0]==0){
+            continue;
+        } else {
+            port = stoi(sport);
+            break;
+        }
     }
 
 
@@ -182,7 +198,13 @@ int main(int argc, char* argv[])
             fflush(stdout);
             char buff[MAXLINE];
             fgets(buff,MAXLINE,stdin);
+            if(buff[0]=='\n'){
+                continue;
+            }
             strtok(buff,"\n");
+            if(buff[0]==0){
+                continue;
+            }
             std::string cmd = buff;
             if(cmd == "quit" || cmd == "exit"){
                 break;
